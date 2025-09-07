@@ -50,11 +50,22 @@ class PartyBuilderCog(commands.Cog):
                 '<:p_low:1411781515573989498>' : 1,
             },
             'role_emoji' : {
-                '<:b_adps:1411779164595552298>' : 'adps',
-                '<:b_qdps:1411779187710103592>' : 'qdps',
-                '<:b_aheal:1411779152385671199>' : 'aheal',
-                '<:b_qheal:1411779177270743133>' : 'qheal',
-                '⚔️' : 'dps'
+                '<:B_alacrity:768642052124573749>' : 'adps',
+                '<:B_quickness:768642112740524062>' : 'qdps',
+                '<:B_AlacHeal:1007268338570899476>' : 'aheal',
+                '<:B_QuickHeal:1007268340793884713>' : 'qheal',
+                '⚔️' : 'dps',
+                '🔥' : 'condi',
+                '🪞' : 'reflect',
+                '<:P8_chronomancer:774783646241783808>' : 'tower',
+                '🖐️' : 'handkite',
+                '📌' : 'tdpush',
+                '🪔' : 'lamp',
+                '🪁' : 'qadimkite',
+                '🗼' : 'pylon',
+                '<:T_arrow:768660871719026708>' : 'aranged',
+                '<:T_circle:768660920289198081>' : 'qranged',
+                '🏹' : 'ranged'
             },
             'role_attributes': [
                 'dps',
@@ -63,6 +74,7 @@ class PartyBuilderCog(commands.Cog):
                 'alac'
             ],
             'rolesets' : {
+
                 'Standard 5 Player': {
                     'players': 5,
                     'description': 'Standard 5-player squad.',
@@ -80,6 +92,7 @@ class PartyBuilderCog(commands.Cog):
                         'dps': ['dps']
                     }
                 },
+
                 'Standard 10 Player': {
                     'players': 10,
                     'description': 'Standard 10-player squad.',
@@ -97,21 +110,107 @@ class PartyBuilderCog(commands.Cog):
                         'dps': ['dps']
                     }
                 },
-                'Debug': {
-                    'players': 2,
-                    'description': 'Two players, heal/quick/alac',
+
+                'Raid - Wing 1': {
+                    'players': 10,
+                    'description': 'Raid squad with condi dps.',
                     'attributes': {
-                        'dps': 1,
-                        'heal': 1,
-                        'quick': 1,
-                        'alac': 1
+                        'dps': 8,
+                        'heal': 2,
+                        'quick': 2,
+                        'alac': 2,
+                        'condi': 2
                     },
                     'roles': {
                         'aheal': ['alac', 'heal'],
                         'qheal': ['quick', 'heal'],
                         'adps': ['alac', 'dps'],
                         'qdps': ['quick', 'dps'],
-                        'dps': ['dps']
+                        'dps': ['dps'],
+                        'condi': ['condi','dps']
+                    }
+                },
+
+                'Raid - Wing 4': {
+                    'players': 10,
+                    'description': 'Raid squad with handkite.',
+                    'attributes': {
+                        'dps': 8,
+                        'heal': 2,
+                        'quick': 2,
+                        'alac': 2,
+                        'handkite': 1
+                    },
+                    'roles': {
+                        'aheal': ['alac', 'heal'],
+                        'qheal': ['quick', 'heal'],
+                        'adps': ['alac', 'dps'],
+                        'qdps': ['quick', 'dps'],
+                        'dps': ['dps'],
+                        'handkite': ['handkite','dps']
+                    }
+                },
+
+
+                'Raid - Wing 5': {
+                    'players': 10,
+                    'description': 'Raid squad with tdpush.',
+                    'attributes': {
+                        'dps': 8,
+                        'heal': 2,
+                        'quick': 2,
+                        'alac': 2,
+                        'tdpush': 1
+                    },
+                    'roles': {
+                        'aheal': ['alac', 'heal'],
+                        'qheal': ['quick', 'heal'],
+                        'adps': ['alac', 'dps'],
+                        'qdps': ['quick', 'dps'],
+                        'dps': ['dps'],
+                        'tdpush': ['tdpush','dps']
+                    }
+                },
+
+                'Raid - Wing 6': {
+                    'players': 10,
+                    'description': 'Raid squad with lamp & qadim kite.',
+                    'attributes': {
+                        'dps': 8,
+                        'heal': 2,
+                        'quick': 2,
+                        'alac': 2,
+                        'lamp': 1,
+                        'qadimkite': 1
+                    },
+                    'roles': {
+                        'aheal': ['alac', 'heal'],
+                        'qheal': ['quick', 'heal'],
+                        'adps': ['alac', 'dps'],
+                        'qdps': ['quick', 'dps'],
+                        'dps': ['dps'],
+                        'lamp': ['lamp','dps'],
+                        'qadimkite': ['qadimkite','dps']
+                    }
+                },
+
+                'Raid - Wing 7': {
+                    'players': 10,
+                    'description': 'Raid squad with pylon.',
+                    'attributes': {
+                        'dps': 8,
+                        'heal': 2,
+                        'quick': 2,
+                        'alac': 2,
+                        'pylon': 3
+                    },
+                    'roles': {
+                        'aheal': ['alac', 'heal'],
+                        'qheal': ['quick', 'heal'],
+                        'adps': ['alac', 'dps'],
+                        'qdps': ['quick', 'dps'],
+                        'dps': ['dps'],
+                        'pylon': ['pylon','dps']
                     }
                 },
             }
