@@ -46,8 +46,8 @@ class PartyBuilderCog(commands.Cog):
 
         default_global = {
             'priority_emoji' : {
-                '<:p_high:1411781517042122934>' : 0,
-                '<:p_low:1411781515573989498>' : 1,
+                '<:quaggan_happy:794988733437968384>' : 0,
+                '<:choya_angry:788250619810414592>' : 1,
             },
             'role_emoji' : {
                 '<:B_alacrity:768642052124573749>' : 'adps',
