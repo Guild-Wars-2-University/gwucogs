@@ -83,7 +83,7 @@ class PartyBuilderView(discord.ui.View):
         else:
             self.add_reactions_button.disabled = True
             
-        await interaction.response.edit_message(content=f"{role_set} {inverse}", view=self, embed=embed)
+        await interaction.response.edit_message(view=self, embed=embed)
         
     @discord.ui.button(label="Ping Selected in Thread", style=discord.ButtonStyle.green, row=2, disabled=True)
     async def ping_in_thread_button(self, interaction:discord.Interaction, button:discord.ui.Button):

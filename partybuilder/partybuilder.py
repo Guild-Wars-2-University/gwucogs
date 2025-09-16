@@ -42,9 +42,8 @@ class PartyBuilderCog(commands.Cog):
         super().__init__()
         self.bot = bot
         self.key = 124374143
-        self.config = Config.get_conf(self, self.key, force_registration=True)
 
-        default_global = {
+        self.default_global = {
             'priority_emoji' : {
                 '<:quaggan_happy:794988733437968384>' : 0,
                 '<:choya_angry:788250619810414592>' : 1,
@@ -259,8 +258,6 @@ class PartyBuilderCog(commands.Cog):
                 },
             }
         }
-
-        self.config.register_guild(**default_global)
 
         self.ctx_menu_pick_from_reactions = app_commands.ContextMenu(name='Pick from reactions', callback=self.pick_from_reactions)
         self.bot.tree.add_command(self.ctx_menu_pick_from_reactions)
@@ -605,9 +602,9 @@ class PartyBuilderCog(commands.Cog):
         #         react_data[r.emoji] = mentions
         react_data = await gather_reactions(message)
                 
-        priority_emoji = await self.config.guild(interaction.guild).get_raw('priority_emoji')
-        role_emoji = await self.config.guild(interaction.guild).get_raw('role_emoji')
-        rolesets = await self.config.guild(interaction.guild).get_raw('rolesets')
+        priority_emoji = self.default_global['priority_emoji']
+        role_emoji = self.default_global['role_emoji']
+        rolesets = self.default_global['rolesets']
 
         view = PartyBuilderView(self.bot, interaction, message, react_data, rolesets, role_emoji, priority_emoji);
         await interaction.followup.send(view=view)
