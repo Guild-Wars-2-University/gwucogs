@@ -170,7 +170,7 @@ class PartyBuilderCog(commands.Cog):
                         'dps': ['dps'],
                     },
                     'special_roles': {
-                        'tower ': {'required_role': ['dps', 'qdps', 'adps', 'aheal', 'qheal'], 'attributes': ['tower']}
+                        'tower': {'required_role': ['dps', 'qdps', 'adps', 'aheal', 'qheal'], 'attributes': ['tower']}
                     }
                 },
 
