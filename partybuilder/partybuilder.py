@@ -57,12 +57,12 @@ class PartyBuilderCog(commands.Cog):
                 '⚔️' : 'dps',
                 '🔥' : 'condi',
                 '🪞' : 'reflect',
-                '<:P8_chronomancer:774783646241783808>' : 'tower',
+                '<:R7_qadim_peerless:832042940012036128>' : 'pylon',
                 '🖐️' : 'handkite',
                 '📌' : 'tdpush',
                 '🪔' : 'lamp',
                 '🪁' : 'qadimkite',
-                '🗼' : 'pylon',
+                '🗼' : 'tower',
                 '<:T_arrow:768660871719026708>' : 'aranged',
                 '<:T_circle:768660920289198081>' : 'qranged',
                 '🏹' : 'ranged'
@@ -128,6 +128,50 @@ class PartyBuilderCog(commands.Cog):
                         'qdps': ['quick', 'dps'],
                         'dps': ['dps'],
                         'condi': ['condi','dps']
+                    }
+                },
+
+                'Raid - Wing 2': {
+                    'players': 10,
+                    'description': 'Raid squad with reflect.',
+                    'attributes': {
+                        'dps': 8,
+                        'heal': 2,
+                        'quick': 2,
+                        'alac': 2,
+                        'reflect': 1
+                    },
+                    'roles': {
+                        'aheal': ['alac', 'heal'],
+                        'qheal': ['quick', 'heal'],
+                        'adps': ['alac', 'dps'],
+                        'qdps': ['quick', 'dps'],
+                        'dps': ['dps'],
+                    },
+                    'special_roles': {
+                        'reflect': {'required_role': ['dps', 'qdps', 'adps', 'aheal', 'qheal'], 'attributes': ['reflect']}
+                    }
+                },
+
+                'Raid - Wing 3': {
+                    'players': 10,
+                    'description': 'Raid squad with tower.',
+                    'attributes': {
+                        'dps': 8,
+                        'heal': 2,
+                        'quick': 2,
+                        'alac': 2,
+                        'tower': 1
+                    },
+                    'roles': {
+                        'aheal': ['alac', 'heal'],
+                        'qheal': ['quick', 'heal'],
+                        'adps': ['alac', 'dps'],
+                        'qdps': ['quick', 'dps'],
+                        'dps': ['dps'],
+                    },
+                    'special_roles': {
+                        'tower ': {'required_role': ['dps', 'qdps', 'adps', 'aheal', 'qheal'], 'attributes': ['tower']}
                     }
                 },
 

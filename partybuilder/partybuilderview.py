@@ -38,8 +38,9 @@ class PartyBuilderView(discord.ui.View):
         comp_inverse = None
         if comp:
             comp_inverse = {}
-            for player, role in comp.items():
-                comp_inverse.setdefault(role, []).append(player)
+            for player, roles in comp.items():
+                for role in roles:
+                    comp_inverse.setdefault(role, []).append(player)
 
         return comp_inverse
 
@@ -72,7 +73,7 @@ class PartyBuilderView(discord.ui.View):
 
             role_set = self.role_sets[val]
             self.compositions, unused = generate_multiple_teams(inverse, role_set)
-
+            
             embed = None
             if self.compositions:
                 embed = self.create_embed(self.compositions);
@@ -82,7 +83,7 @@ class PartyBuilderView(discord.ui.View):
         else:
             self.add_reactions_button.disabled = True
             
-        await interaction.response.edit_message(view=self, embed=embed)
+        await interaction.response.edit_message(content=f"{role_set} {inverse}", view=self, embed=embed)
         
     @discord.ui.button(label="Ping Selected in Thread", style=discord.ButtonStyle.green, row=2, disabled=True)
     async def ping_in_thread_button(self, interaction:discord.Interaction, button:discord.ui.Button):
@@ -113,7 +114,7 @@ class PartyBuilderView(discord.ui.View):
             emoji_for_comp.extend(self.priority_emoji.keys())
             selected_role = self.select_roleset.values[0]
             role_set = self.role_sets[selected_role]
-            emoji_for_comp.extend([self.role_emoji_inverse[r] for r in  role_set['roles']])
+            emoji_for_comp.extend([self.role_emoji_inverse[r] for r in role_set['roles']])
 
         for emoji in emoji_for_comp:
             await self.original_message.add_reaction(emoji)
