@@ -114,7 +114,8 @@ class PartyBuilderView(discord.ui.View):
             emoji_for_comp.extend(self.priority_emoji.keys())
             selected_role = self.select_roleset.values[0]
             role_set = self.role_sets[selected_role]
-            emoji_for_comp.extend([self.role_emoji_inverse[r] for r in role_set['roles']])
+            all_roles = [k for k in role_set.get('roles', {}).keys()] + [k for k in role_set.get('special_roles', {}).keys()]
+            emoji_for_comp.extend([self.role_emoji_inverse[r] for r in all_roles])
 
         for emoji in emoji_for_comp:
             await self.original_message.add_reaction(emoji)
