@@ -102,3 +102,70 @@ class Creator(commands.Cog):
                 await ctx.send(f"Message successfully created.  Jump URL: {newmessage.jump_url}")
             except discord.errors.Forbidden:
                 await ctx.send("I'm not allowed to view or send messages in the channel where I am creating a new message.")
+
+    @commands.command()
+    @commands.admin()
+    async def newthread(
+        self, ctx, cid: int, title:str, ccid: int, *, content: Union[int, str]
+    ):
+        """Creates a thread with the content of another message or the specified content.
+
+        Arguments:
+            - cid: The ID of the channel where you are creating the thread (Required)
+
+            - title: The text title for the thread (Required)
+
+            - ccid: The ID of the channel of the message you are copying from.  If you are giving the raw content yourself, pass 0 as the channel ID. (Optional)
+
+            - content: The ID of the message that contains the contents of what you want the other message to become, or the new content of the message.  (Required, integer (for message id) or text (for new content)
+
+        Examples:
+        `[p]newthread <edit_channel_id> <title> <copy_channel_id> <copy_message_id>`
+        `[p]newthread <edit_channel_id> <title> 0 New content here`
+
+        Real Examples:
+        `[p]newthread 133251234164375552 "Your Title" 133251234164375552 578968157520134161`
+        `[p]newthread 133251234164375552 "The Title" 0 ah bruh`
+        """
+
+        # Make sure channels and IDs are all good
+        sendchannel = self.bot.get_channel(cid)
+        if not sendchannel or not type(sendchannel) == discord.ForumChannel:
+            return await ctx.send("Invalid forum channel for the message you are sending.")
+        if not sendchannel.permissions_for(ctx.author).manage_messages and not (
+            await self.bot.is_owner(ctx.author)
+        ):
+            return await ctx.send("You do not have permission to send messages in that channel.")
+
+        if ccid != 0 and type(content) == int:
+            copychannel = self.bot.get_channel(ccid)
+            if not copychannel or not type(sendchannel) == discord.TextChannel:
+                return await ctx.send("Invalid ID for channel of the message to copy from.")
+            try:
+                copymessage = await copychannel.fetch_message(content)
+            except discord.NotFound:
+                return await ctx.send(
+                    "Invalid copying message ID, or you passed the wrong channel ID for the message."
+                )
+            except discord.Forbidden:
+                return await ctx.send(
+                    "I'm not allowed to view the channel of the message from which I am copying."
+                )
+
+            # All checks passed
+            content = copymessage.content
+            try:
+                embed = copymessage.embeds[0]
+            except IndexError:
+                embed = None
+            try:
+                newthread = await sendchannel.create_thread(name=title, content=content, embed=embed)
+            except discord.errors.Forbidden:
+                return await ctx.send("I'm not allowed to view or send messages in the channel where I am creating a new thread.")
+            await ctx.send(f"Thread successfully created.  Jump URL: {newthread.jump_url}")
+        else:
+            try:
+                newthread = await sendchannel.create_thread(name=title, content=content, embed=None)
+                await ctx.send(f"Thread successfully created.  Jump URL: {newthread.jump_url}")
+            except discord.errors.Forbidden:
+                await ctx.send("I'm not allowed to view or send messages in the channel where I am creating a new thread.")
