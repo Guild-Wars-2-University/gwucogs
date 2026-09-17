@@ -162,10 +162,10 @@ class Creator(commands.Cog):
                 newthread = await sendchannel.create_thread(name=title, content=content, embed=embed)
             except discord.errors.Forbidden:
                 return await ctx.send("I'm not allowed to view or send messages in the channel where I am creating a new thread.")
-            await ctx.send(f"Thread successfully created.  Jump URL: {newthread.jump_url}")
+            await ctx.send(f"Thread successfully created.  Jump URL: {newthread.thread.jump_url}")
         else:
             try:
                 newthread = await sendchannel.create_thread(name=title, content=content, embed=None)
-                await ctx.send(f"Thread successfully created.  Jump URL: {newthread.jump_url}")
+                await ctx.send(f"Thread successfully created.  Jump URL: {newthread.thread.jump_url}")
             except discord.errors.Forbidden:
                 await ctx.send("I'm not allowed to view or send messages in the channel where I am creating a new thread.")
