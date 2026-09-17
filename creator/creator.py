@@ -63,12 +63,12 @@ class Creator(commands.Cog):
 
         # Make sure channels and IDs are all good
         sendchannel = self.bot.get_channel(cid)
-        if not sendchannel or not type(sendchannel) == discord.TextChannel:
-            return await ctx.send("Invalid channel for the message you are editing.")
+        if not sendchannel or not type(sendchannel) == discord.TextChannel or not type(sendchannel == discord.Thread):
+            return await ctx.send("Invalid channel for the message you are sending.")
         if not sendchannel.permissions_for(ctx.author).manage_messages and not (
             await self.bot.is_owner(ctx.author)
         ):
-            return await ctx.send("You do not have permission to edit messages in that channel.")
+            return await ctx.send("You do not have permission to send messages in that channel.")
 
         if ccid != 0 and type(content) == int:
             copychannel = self.bot.get_channel(ccid)
