@@ -43,7 +43,7 @@ class Creator(commands.Cog):
     async def newmessage(
         self, ctx, cid: int, ccid: int, *, content: Union[int, str]
     ):
-        """Edits a message with the content of another message or the specified content.
+        """Posts a message with the content of another message or the specified content.
 
         Arguments:
             - cid: The ID of the channel of the message you are creating (Required)
@@ -63,7 +63,7 @@ class Creator(commands.Cog):
 
         # Make sure channels and IDs are all good
         sendchannel = self.bot.get_channel(cid)
-        if not sendchannel or not type(sendchannel) == discord.TextChannel or not type(sendchannel == discord.Thread):
+        if not sendchannel or type(sendchannel) not in (discord.TextChannel, discord.Thread):
             return await ctx.send("Invalid channel for the message you are sending.")
         if not sendchannel.permissions_for(ctx.author).manage_messages and not (
             await self.bot.is_owner(ctx.author)
