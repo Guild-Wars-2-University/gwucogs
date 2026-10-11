@@ -3,6 +3,11 @@ from enum Import Enum
 import discord
 from redbot.core import commands, app_commands
 
+class PingTypes(Enum):
+    Reacts = 1
+    Mentions = 2
+
+
 class PingUsersModal(discord.ui.Modal, title="Ping users"):
     ping_type = discord.ui.Label(
         text="Ping users by",
