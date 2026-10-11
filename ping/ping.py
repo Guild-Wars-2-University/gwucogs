@@ -1,4 +1,4 @@
-from enum Import Enum
+from enum import Enum
 
 import discord
 from redbot.core import commands, app_commands
