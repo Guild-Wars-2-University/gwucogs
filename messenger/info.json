@@ -1,0 +1,6 @@
+{
+    "name": "Messenger",
+    "short": "Commands to send messages",
+    "description": "Commands to send, copy, and edit messages from the bot",
+    "author": [ "Helvetica" ]
+}
