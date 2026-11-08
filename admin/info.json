@@ -1,0 +1,6 @@
+{
+    "name": "Admin",
+    "short": "Admin commands for managing bot state",
+    "description": "Admin commands for managing bot state",
+    "author": [ "Helvetica" ]
+}
