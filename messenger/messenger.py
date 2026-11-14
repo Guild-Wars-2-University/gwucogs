@@ -1,11 +1,10 @@
 import re
 from enum import Enum
 
-#testing redbot
 import discord
 from redbot.core import commands, app_commands
 
-from common.globals import Config as global_config
+from .common.globals import Config as global_config
 
 class ChannelTypes(Enum):
     Message = 1
