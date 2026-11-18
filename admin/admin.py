@@ -1,8 +1,8 @@
 import discord
 from redbot.core import commands, app_commands
 
-from common.globals import CONFIG_FILE
-from common.globals import Config as global_config
+from .common.globals import CONFIG_FILE
+from .common.globals import Config as global_config
 
 class Admin(commands.Cog):
     def __init__(self, bot:commands.Bot) -> None:
@@ -12,25 +12,29 @@ class Admin(commands.Cog):
     admin_commands = app_commands.Group(name="admin", description="Adminster bot")
 
     ## Get New Mentions
-    @admin_commands.command(name='getmentions', description="Get mentions since last time")
-    async def newmentions(self, interaction: discord.Interaction) -> None:
-        mentions = []
-        async for message in interaction.channel.history(limit=None):
-            if message.author.id == self.bot.user.id:
+    @admin_commands.command(name='getmentions', description="Get mentions from channel messages")
+    @app_commands.describe(count="How many messages to check (default 100)")
+    async def get_mentions(self, interaction: discord.Interaction, count: int = 100) -> None:
+        await interaction.response.defer(ephemeral=True)
+        mentions = set()
+        async for message in interaction.channel.history(limit=count):
+            if not message.author.bot or message.author.id == self.bot.user.id:
                 break
             for user in message.mentions:
-                current_user = interaction.guild.get_member(int(user.id))
-                if not current_user:
-                    try:
-                        current_user = await interaction.guild.fetch_member(int(user.id))
-                        mentions.append(user.mention)
-                    except discord.NotFound:
-                        continue
+                try:
+                    if interaction.guild.get_member(int(user.id)) or await interaction.guild.fetch_member(int(user.id)):
+                        mentions.add(user.mention)
+                except discord.NotFound:
+                    continue
+                except Exception as e:
+                    await interaction.followup.send(f"Error: {e}", ephemeral=True)
+              
         mentions_string = " ".join(mentions)
         if mentions_string:
-            return await interaction.response.send_message(mentions_string)
+            await interaction.channel.send(mentions_string)
+            return await interaction.followup.send("Mentions found!", ephemeral=True)
         else:
-            return await interaction.response.send_message("No mentions found.", ephemeral=True)
+            return await interaction.followup.send("No mentions found.", ephemeral=True)
 
     ## Sync Slash Commands command
     @admin_commands.command(name="sync", description="Sync slash commands")
