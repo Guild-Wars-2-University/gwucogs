@@ -17,6 +17,8 @@ class Admin(commands.Cog):
     async def get_mentions(self, interaction: discord.Interaction, count: int = 100) -> None:
         await interaction.response.defer(ephemeral=True)
         mentions = set()
+        first_member = None
+        last_member = None
         async for message in interaction.channel.history(limit=count):
             if not message.author.bot or message.author.id == self.bot.user.id:
                 break
@@ -24,6 +26,9 @@ class Admin(commands.Cog):
                 try:
                     if interaction.guild.get_member(int(user.id)) or await interaction.guild.fetch_member(int(user.id)):
                         mentions.add(user.mention)
+                        if not last_member:
+                            last_member = user.mention
+                        first_member = user.mention
                 except discord.NotFound:
                     continue
                 except Exception as e:
@@ -32,7 +37,7 @@ class Admin(commands.Cog):
         mentions_string = " ".join(mentions)
         if mentions_string:
             await interaction.channel.send(mentions_string)
-            return await interaction.followup.send("Mentions found!", ephemeral=True)
+            return await interaction.followup.send(f"First: {first_member} | Last: {last_member} | Total: {len(mentions)}", ephemeral=True)
         else:
             return await interaction.followup.send("No mentions found.", ephemeral=True)
 
